@@ -1,4 +1,5 @@
-import type { WorkGroup as WorkGroupType } from "@/data/works";
+import Link from "next/link";
+import type { WorkGroup as WorkGroupType } from "@/data/work-types";
 
 type WorkGroupProps = {
   group: WorkGroupType;
@@ -21,7 +22,11 @@ export function WorkGroup({ group }: WorkGroupProps) {
               <p>{work.genre}</p>
             </div>
             <div className="work-body">
-              <h3>{work.title}</h3>
+              <h3>
+                <Link className="work-title-link" href={`/works/${work.category}/${work.slug}`}>
+                  {work.title}
+                </Link>
+              </h3>
               <p className="excerpt">{work.excerpt}</p>
               <ul className="keyword-list" aria-label={`${work.title} keywords`}>
                 {work.keywords.map((keyword) => (
@@ -29,30 +34,6 @@ export function WorkGroup({ group }: WorkGroupProps) {
                 ))}
               </ul>
               <p className="note">{work.note}</p>
-              {work.poemSections ? (
-                <div className="poem-sequence" aria-label={`${work.title} full text`}>
-                  {work.poemSections.map((section) => (
-                    <section className="poem-section" key={section.number}>
-                      <p className="poem-number">{section.number}</p>
-                      <div className="poem-lines">
-                        {section.lines.map((line, index) =>
-                          line ? (
-                            <span className="poem-line" key={`${section.number}-${index}`}>
-                              {line}
-                            </span>
-                          ) : (
-                            <span
-                              aria-hidden="true"
-                              className="poem-line poem-line-empty"
-                              key={`${section.number}-${index}`}
-                            />
-                          )
-                        )}
-                      </div>
-                    </section>
-                  ))}
-                </div>
-              ) : null}
             </div>
           </article>
         ))}

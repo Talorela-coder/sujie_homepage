@@ -1,257 +1,32 @@
-export type WorkGenre =
-  | "Fiction"
-  | "Essays"
-  | "Poems"
-  | "Letters"
-  | "Travel Notes";
+import { essays } from "@/data/essays";
+import { fictions } from "@/data/fictions";
+import { letters } from "@/data/letters";
+import { poems } from "@/data/poems";
+import { travelNotes } from "@/data/travel-notes";
+import {
+  workCategories,
+  type Work,
+  type WorkCategorySlug,
+  type WorkGroup
+} from "@/data/work-types";
 
-export type Work = {
-  title: string;
-  genre: WorkGenre;
-  year: string;
-  keywords: string[];
-  excerpt: string;
-  note: string;
-  poemSections?: {
-    number: string;
-    lines: string[];
-  }[];
+const worksByCategory: Record<WorkCategorySlug, Work[]> = {
+  fiction: fictions,
+  essays,
+  poems,
+  letters,
+  "travel-notes": travelNotes
 };
 
-export type WorkGroup = {
-  genre: WorkGenre;
-  description: string;
-  works: Work[];
-};
+export const workGroups: WorkGroup[] = workCategories.map((category) => ({
+  slug: category.slug,
+  genre: category.genre,
+  description: category.description,
+  works: worksByCategory[category.slug]
+}));
 
-export const workGroups: WorkGroup[] = [
-  {
-    genre: "Fiction",
-    description: "Stories and novel fragments arranged as rooms, weather, and memory.",
-    works: [
-      {
-        title: "A House Facing the Rain",
-        genre: "Fiction",
-        year: "2026",
-        keywords: ["memory", "room", "absence"],
-        excerpt:
-          "The room kept its own weather. Even in August, a thin rain seemed to fall from the ceiling of her memory.",
-        note: "Fiction fragment in progress."
-      },
-      {
-        title: "Salt on the Window",
-        genre: "Fiction",
-        year: "2025",
-        keywords: ["sea", "threshold", "return"],
-        excerpt:
-          "She returned to the coast without luggage, carrying only the sentence she had failed to send.",
-        note: "Short story draft."
-      }
-    ]
-  },
-  {
-    genre: "Essays",
-    description: "Quiet prose on reading, distance, language, and the afterlife of places.",
-    works: [
-      {
-        title: "Notes on Returning",
-        genre: "Essays",
-        year: "2026",
-        keywords: ["home", "language", "distance"],
-        excerpt:
-          "To return is not to close a circle. It is to discover the gap has learned to speak in your voice.",
-        note: "Essay sequence."
-      }
-    ]
-  },
-  {
-    genre: "Poems",
-    description: "Small poems, mostly spare, often written beside windows or train tables.",
-    works: [
-      {
-        title: "植物、季节，与火焰（组诗）",
-        genre: "Poems",
-        year: "Undated",
-        keywords: ["植物", "季节", "火焰", "北方", "春天"],
-        excerpt:
-          "漫长寂寥的岁月里 / 也有人将我写进书页了 / 火苗、唾液腺，让我成为更有价值之物",
-        note: "A sequence of ten poems imported from the desktop Word document.",
-        poemSections: [
-          {
-            number: "1",
-            lines: [
-              "漫长寂寥的岁月里",
-              "也有人将我写进书页了",
-              "火苗、唾液腺，让我成为更有价值之物",
-              "可从来没人询问过我",
-              "一棵树，她在想什么？",
-              "死亡、雨水",
-              "或是一声短暂停歇在枝桠间",
-              "却被我久远爱上了的",
-              "             蝉鸣"
-            ]
-          },
-          {
-            number: "2",
-            lines: [
-              "疼痛缠绕起来的过程",
-              "我们身体里的结/要如何开解？",
-              "握紧彼此的匕首",
-              "时间从秋天来到冬天",
-              "无法为自己辩解",
-              "而此刻，我理应成为树",
-              "用终生的无法言语",
-              "来向你致歉",
-              "",
-              "我怀念我的秋天，北方",
-              "      和它一地璀璨的灯笼"
-            ]
-          },
-          {
-            number: "3",
-            lines: [
-              "我余光中一瞬的震颤——",
-              "落在脚面的鸽子",
-              "和，檐角下",
-              "那只灰色的乌鸫",
-              "热带一隅"
-            ]
-          },
-          {
-            number: "4",
-            lines: [
-              "北方/一座矮小的城市里",
-              "穿过湿润的语境",
-              "她蹲下身",
-              "草丛中/一棵草尖轻晃",
-              "无限接近了一只蜗牛的触角"
-            ]
-          },
-          {
-            number: "5",
-            lines: [
-              "线一样的沉默",
-              "缓慢连结",
-              "草丛外",
-              "疾驰而过的火车",
-              "用它的影子",
-              "惊扰野兔"
-            ]
-          },
-          {
-            number: "6",
-            lines: [
-              "有人步入黑夜",
-              "压迫无声",
-              "沉默携带的重量",
-              "顺从——白色缝隙中",
-              "滚落出巨幅岩石",
-              "如死亡般/刻板的画作",
-              "",
-              "如今，她们所追寻的",
-              "不过一种",
-              "被焚烧的秩序"
-            ]
-          },
-          {
-            number: "7",
-            lines: [
-              "剥开落日的茧",
-              "傍晚的桥梁",
-              "光线与鳞片无数次相遇",
-              "黑色空气里",
-              "她沉默着生长",
-              "像一棵冬眠的树"
-            ]
-          },
-          {
-            number: "8",
-            lines: [
-              "我总是在思考",
-              "过去到将来，可唯独缺少当下",
-              "峡谷，帽子，牦牛——被风鼓吹的自由",
-              "动荡的爱情",
-              "耳膜疲乏",
-              "可我无法停止接收声音",
-              "更遥远之地",
-              "有的不仅仅是一双眼睛",
-              "灼人的句子，源于",
-              "你泉水似的目光啊"
-            ]
-          },
-          {
-            number: "9",
-            lines: [
-              "我在春天拿出竹箕",
-              "抖一缕尘，铺上储藏一冬的雪",
-              "阳光将它晒成雨水时",
-              "气候仍是冷的",
-              "",
-              "她的伞从雨中经过",
-              "窗前那支沉默的杜鹃忽然开了",
-              "风吹响他的花瓣",
-              "哗啦哗啦——心跳的声音",
-              "可是春天不会说话",
-              "也无法带来挟诗的风",
-              "",
-              "诗人死于冬天的槐树下",
-              "她踢一脚雪",
-              "槐花就落了满地",
-              "春天到了"
-            ]
-          },
-          {
-            number: "10",
-            lines: [
-              "横过村落的那道铁轨",
-              "雪落在划痕上",
-              "我在棱镜中看到棱镜",
-              "于影像外望见影像",
-              "枯枝和孤鸟",
-              "不如何勉强地凑合了一下"
-            ]
-          }
-        ]
-      },
-      {
-        title: "Small Light",
-        genre: "Poems",
-        year: "2025",
-        keywords: ["light", "winter", "silence"],
-        excerpt:
-          "At dusk / the lamp remembers / what the room could not say.",
-        note: "Three-line poem."
-      }
-    ]
-  },
-  {
-    genre: "Letters",
-    description: "Epistolary pieces and unsent correspondences.",
-    works: [
-      {
-        title: "Letter After Midnight",
-        genre: "Letters",
-        year: "2026",
-        keywords: ["letter", "night", "voice"],
-        excerpt:
-          "I write after the city has softened, when every window becomes a small confession.",
-        note: "Unsent letter."
-      }
-    ]
-  },
-  {
-    genre: "Travel Notes",
-    description: "Field notes from stations, shorelines, museums, and borrowed rooms.",
-    works: [
-      {
-        title: "Blue Hour in a Foreign Station",
-        genre: "Travel Notes",
-        year: "2025",
-        keywords: ["station", "blue hour", "walking"],
-        excerpt:
-          "The platform clock moved with the calm cruelty of a thing that has never waited for anyone.",
-        note: "Travel notebook entry."
-      }
-    ]
-  }
-];
+export const allWorks = workGroups.flatMap((group) => group.works);
+
+export function findWork(category: string, slug: string) {
+  return allWorks.find((work) => work.category === category && work.slug === slug);
+}
