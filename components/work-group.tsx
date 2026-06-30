@@ -29,6 +29,30 @@ export function WorkGroup({ group }: WorkGroupProps) {
                 ))}
               </ul>
               <p className="note">{work.note}</p>
+              {work.poemSections ? (
+                <div className="poem-sequence" aria-label={`${work.title} full text`}>
+                  {work.poemSections.map((section) => (
+                    <section className="poem-section" key={section.number}>
+                      <p className="poem-number">{section.number}</p>
+                      <div className="poem-lines">
+                        {section.lines.map((line, index) =>
+                          line ? (
+                            <span className="poem-line" key={`${section.number}-${index}`}>
+                              {line}
+                            </span>
+                          ) : (
+                            <span
+                              aria-hidden="true"
+                              className="poem-line poem-line-empty"
+                              key={`${section.number}-${index}`}
+                            />
+                          )
+                        )}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </article>
         ))}
